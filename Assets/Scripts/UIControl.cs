@@ -9,7 +9,7 @@ public class UIControl : MonoBehaviour
     Hero hero;
     Door door;
     public bool destroyAll = false;
-    public GameObject PauseScreen;
+    public GameObject PauseScreen, UiControl, UIJouStick;
     bool pauseOnOff = false;
     public Text appleAmauntText;
 
@@ -64,6 +64,9 @@ public class UIControl : MonoBehaviour
         Time.timeScale = 0f;
         hero.enabled = false;
         PauseScreen.SetActive(true);
+        UiControl.SetActive(false);
+        UIJouStick.SetActive(false);
+
     }
 
     public void PauseOff()
@@ -72,6 +75,8 @@ public class UIControl : MonoBehaviour
         Time.timeScale = 1f;
         hero.enabled = true;
         PauseScreen.SetActive(false);
+        UiControl.SetActive(true);
+        UIJouStick.SetActive(true);
 
     }
 
@@ -81,6 +86,13 @@ public class UIControl : MonoBehaviour
         Time.timeScale = 1f;
         hero.enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ExitBtn()
+    {
+        Time.timeScale = 1f;
+        hero.enabled = true;
+        SceneManager.LoadScene(0);
     }
 
 

@@ -21,6 +21,6 @@ public class FireButton : MonoBehaviour
             gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
         }
         else
-            gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+            gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.5f);
     }
 }
