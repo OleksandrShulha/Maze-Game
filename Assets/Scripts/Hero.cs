@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Hero : MonoBehaviour
     public GameObject[] amountKeyOnMap;
     public Transform buletStartPosition;
     bool isBulet = false;
+    bool isDead = false;
+    bool isWin = false;
     private int vectorBulet = 1; //1-right, 2-down, 3-left,4-up
     Door door;
 
@@ -177,17 +180,33 @@ public class Hero : MonoBehaviour
             Mathf.Abs(door.transform.position.y - transform.position.y) <= 0.25f &&
             Mathf.Abs(door.transform.position.x - transform.position.x) <= 0.25f)
         {
-            Debug.Log("Победа!!!");
+            if (PlayerPrefs.HasKey("coin"))
+            {
+                PlayerPrefs.SetInt("coin", PlayerPrefs.GetInt("coin") + 5);
+            }
+            else
+                PlayerPrefs.SetInt("coin", 5);
             Time.timeScale = 0f;
             speed = 0;
-
+            isWin = true;
+            Win();
         }
+    }
+
+
+    public bool GetIsWin()
+    {
+        return isWin;
     }
 
     public void HeroDead()
     {
-        Debug.Log("Ded");
-        //Time.timeScale = 0f;
+        isDead = true;
+    }
+
+    public bool GetIsDead()
+    {
+        return isDead;
     }
 
 
@@ -225,5 +244,11 @@ public class Hero : MonoBehaviour
     public void SetJostickDown(bool joystickDown)
     {
         this.joystickDown = joystickDown;
+    }
+
+    public void Win()
+    {
+        if (!PlayerPrefs.HasKey("lvl") || PlayerPrefs.GetInt("lvl") < SceneManager.GetActiveScene().buildIndex)
+            PlayerPrefs.SetInt("lvl", SceneManager.GetActiveScene().buildIndex);
     }
 }
