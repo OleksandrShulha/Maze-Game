@@ -24,6 +24,8 @@ public class Hero : MonoBehaviour
     public bool joystickRight = false;
     public bool joystickLeft = false;
 
+    public MusicGame musicGame;
+    public SoundGame soundGame;
 
     void Start()
     {
@@ -144,8 +146,10 @@ public class Hero : MonoBehaviour
 
     public void AtackHero()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && amountApples > 0 && isBulet==false){
+        if(Input.GetKeyDown(KeyCode.Space) && amountApples > 0 && isBulet==false)
+        {
             Instantiate(appleBulet, buletStartPosition.position, buletStartPosition.rotation);
+            soundGame.PlayAppleShot();
             isBulet = true;
             amountApples -= 1;
         }
@@ -155,6 +159,7 @@ public class Hero : MonoBehaviour
     {
         if (amountApples > 0 && isBulet == false)
         {
+            soundGame.PlayAppleShot();
             Instantiate(appleBulet, buletStartPosition.position, buletStartPosition.rotation);
             isBulet = true;
             amountApples -= 1;
@@ -171,6 +176,7 @@ public class Hero : MonoBehaviour
         if (amountKeyOnMap.Length == amountKey)
         {
             door.SetDoorIsOpen(true);
+            soundGame.PlayDoorOpen();
         }
     }
 
@@ -186,10 +192,14 @@ public class Hero : MonoBehaviour
             }
             else
                 PlayerPrefs.SetInt("coin", 5);
+
+
             Time.timeScale = 0f;
             speed = 0;
             isWin = true;
             Win();
+            musicGame.StopMusic();
+            soundGame.PlayWin();
         }
     }
 
@@ -202,6 +212,9 @@ public class Hero : MonoBehaviour
     public void HeroDead()
     {
         isDead = true;
+        musicGame.StopMusic();
+        soundGame.PlayLoose();
+        //gameObject.SetActive(false);
     }
 
     public bool GetIsDead()

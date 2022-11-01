@@ -59,6 +59,8 @@ public class Enemy2 : MonoBehaviour
     public bool isLeft = false;
     UIControl destroyAll;
 
+    public SoundGame soundGame;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -446,6 +448,7 @@ public class Enemy2 : MonoBehaviour
             if (rayLeft.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
         if (rayLeftDown)
@@ -453,6 +456,7 @@ public class Enemy2 : MonoBehaviour
             if (rayLeftDown.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
         if (rayLeftUp)
@@ -460,6 +464,7 @@ public class Enemy2 : MonoBehaviour
             if (rayLeftUp.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
 
@@ -469,6 +474,7 @@ public class Enemy2 : MonoBehaviour
             if (rayRight.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
         if (rayRightDown)
@@ -476,6 +482,7 @@ public class Enemy2 : MonoBehaviour
             if (rayRightDown.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
         if (rayRightUp)
@@ -483,6 +490,7 @@ public class Enemy2 : MonoBehaviour
             if (rayRightUp.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
 
@@ -493,6 +501,7 @@ public class Enemy2 : MonoBehaviour
             if (rayUp.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
         if (rayUpRight)
@@ -500,6 +509,7 @@ public class Enemy2 : MonoBehaviour
             if (rayUpRight.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
         if (rayUpLeft)
@@ -507,6 +517,7 @@ public class Enemy2 : MonoBehaviour
             if (rayUpLeft.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
 
@@ -517,6 +528,7 @@ public class Enemy2 : MonoBehaviour
             if (rayDown.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
 
@@ -525,6 +537,7 @@ public class Enemy2 : MonoBehaviour
             if (rayDownRight.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
 
@@ -533,6 +546,7 @@ public class Enemy2 : MonoBehaviour
             if (rayDownLeft.collider.name == "Hero")
             {
                 hero.HeroDead();
+                hero.gameObject.SetActive(false);
             }
         }
 
@@ -556,6 +570,7 @@ public class Enemy2 : MonoBehaviour
         if (HP == 1)
         {
             state = 2;
+            soundGame.PlayStunMonstr();
             transform.GetChild(0).gameObject.SetActive(true);
             transform.GetChild(1).gameObject.SetActive(true);
             rb.bodyType = RigidbodyType2D.Dynamic;
@@ -563,6 +578,7 @@ public class Enemy2 : MonoBehaviour
         }
         else if (HP == 0)
         {
+            soundGame.PlayDeadMonstn();
             GetComponent<Collider2D>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(false);

@@ -11,6 +11,8 @@ public class Enemy1 : MonoBehaviour
     Coroutine coroutineStun;
     UIControl destroyAll;
 
+    public SoundGame soundGame;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -77,12 +79,14 @@ public class Enemy1 : MonoBehaviour
         if (HP == 1)
         {
             state = 2;
+            soundGame.PlayStunMonstr();
             transform.GetChild(0).gameObject.SetActive(true);
             rb.bodyType = RigidbodyType2D.Dynamic;
             coroutineStun = StartCoroutine(WaitStunEffect());
         }
         else if (HP == 0)
         {
+            soundGame.PlayDeadMonstn();
             GetComponent<Collider2D>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(false);
             state = 3;

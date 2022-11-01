@@ -17,6 +17,8 @@ public class Enemy4 : MonoBehaviour
     private int vectorBulet; //1-right, 2-down, 3-left,4-up
     UIControl destroyAll;
 
+    public SoundGame soundGame;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,12 +81,14 @@ public class Enemy4 : MonoBehaviour
         if (HP == 1)
         {
             state = 2;
+            soundGame.PlayStunMonstr();
             transform.GetChild(0).gameObject.SetActive(true);
             rb.bodyType = RigidbodyType2D.Dynamic;
             StartCoroutine(WaitStunEffect());
         }
         else if (HP == 0)
         {
+            soundGame.PlayDeadMonstn();
             GetComponent<Collider2D>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(false);
             state = 3;
@@ -132,6 +136,7 @@ public class Enemy4 : MonoBehaviour
                 //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //}
                 Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
 
             if (transform.position.x < hero.transform.position.x)
@@ -143,6 +148,7 @@ public class Enemy4 : MonoBehaviour
                 //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //}
                 Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
         }
         if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f )
@@ -156,6 +162,7 @@ public class Enemy4 : MonoBehaviour
                 //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //}
                 Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
 
             if (transform.position.y < hero.transform.position.y)
@@ -167,6 +174,7 @@ public class Enemy4 : MonoBehaviour
                 //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //}
                 Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
         }
     }

@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class TargetHero : MonoBehaviour
 {
     Hero hero;
+    public SoundGame soundGame;
+
+
     private void Start()
     {
         hero = FindObjectOfType<Hero>().GetComponent<Hero>();
@@ -21,6 +25,7 @@ public class TargetHero : MonoBehaviour
 
         if (collision.gameObject.tag == "Key")
         {
+            soundGame.PlaykayTakeSound();
             collision.gameObject.SetActive(false);
             hero.SetAmountKey(1);
             hero.ExamWinLvl();

@@ -22,6 +22,8 @@ public class Enemy3 : MonoBehaviour
     private int vectorBulet; //1-right, 2-down, 3-left,4-up
     UIControl destroyAll;
 
+    public SoundGame soundGame;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -68,11 +70,13 @@ public class Enemy3 : MonoBehaviour
             if (vectorBulet == 3 && transform.position.x > hero.transform.position.x)
             {
                 Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
 
             if (vectorBulet == 1 && transform.position.x < hero.transform.position.x)
             {
                 Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
         }
         if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f)
@@ -80,11 +84,13 @@ public class Enemy3 : MonoBehaviour
             if (vectorBulet == 2 && transform.position.y > hero.transform.position.y)
             {
                 Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
 
             if (vectorBulet == 4 && transform.position.y < hero.transform.position.y)
             {
                 Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
             }
         }
     }
@@ -133,12 +139,14 @@ public class Enemy3 : MonoBehaviour
         if (HP == 1)
         {
             state = 2;
+            soundGame.PlayStunMonstr();
             transform.GetChild(0).gameObject.SetActive(true);
             rb.bodyType = RigidbodyType2D.Dynamic;
             StartCoroutine(WaitStunEffect());
         }
         else if (HP == 0)
         {
+            soundGame.PlayDeadMonstn();
             GetComponent<Collider2D>().enabled = false;
             transform.GetChild(0).gameObject.SetActive(false);
             state = 3;
