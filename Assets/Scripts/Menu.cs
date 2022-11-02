@@ -9,22 +9,90 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     public GameObject[] panelLvl;
     int i = 0;
-    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem;
+    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu;
     public Text coinText, appleText, bombText, doorText;
     int coins = 0, apples = 0, bombs = 0, doors=0;
     public Button[] lvls;
+
+    public Toggle musicOn, soundOn;
+    public Slider musicSlider, soundSlider;
+    public AudioSource audioSourceMusic;
+
+    private void Awake()
+    {
+        SetSettingsParametrsOnStart();
+
+    }
 
     void Start()
     {
         UItextMenu();
         SetLvl();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        PlayerPrefs.SetFloat("SoundVolume", soundSlider.value);
+        PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
+        audioSourceMusic.volume = PlayerPrefs.GetFloat("MusicVolume");
+    }
 
 
+    void SetSettingsParametrsOnStart()
+    {
+        if (!PlayerPrefs.HasKey("SoundVolume"))
+            PlayerPrefs.SetFloat("SoundVolume", 1f);
+        if (!PlayerPrefs.HasKey("MusicVolume"))
+            PlayerPrefs.SetFloat("MusicVolume", 0.35f);
+
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+        soundSlider.value = PlayerPrefs.GetFloat("SoundVolume");
+
+
+        if (!PlayerPrefs.HasKey("SoundOn"))
+            PlayerPrefs.SetInt("SoundOn", 1);
+        if (!PlayerPrefs.HasKey("MusicOn"))
+            PlayerPrefs.SetInt("MusicOn", 1);
+
+        if (PlayerPrefs.GetInt("MusicOn") == 1)
+            musicOn.isOn = true;
+        else
+            musicOn.isOn = false;
+
+        if (PlayerPrefs.GetInt("SoundOn") == 1)
+            soundOn.isOn = true;
+        else
+            soundOn.isOn = false;
+    }
+
+    public void SoundOn()
+    {
+        if (soundOn.isOn == true)
+        {
+            PlayerPrefs.SetInt("SoundOn", 1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetInt("SoundOn", 0);
+   
+        }
+    }
+
+    public void MusicOn()
+    {
+        if (musicOn.isOn == true)
+        {
+            PlayerPrefs.SetInt("MusicOn", 1);
+            audioSourceMusic.Play();
+        }
+        else
+        {
+            PlayerPrefs.SetInt("MusicOn", 0);
+            audioSourceMusic.Stop();
+        }
     }
 
     void SetLvl()
@@ -100,6 +168,20 @@ public class Menu : MonoBehaviour
         PanelShoop.SetActive(false);
         PanelItem.SetActive(true);
     }
+
+    public void OpenSettingsMenu()
+    {
+        OsnovneMenu.SetActive(false);
+        SettingMenu.SetActive(true);
+    }
+
+    public void CloseSettingsMenu()
+    {
+        OsnovneMenu.SetActive(true);
+        SettingMenu.SetActive(false);
+    }
+
+
 
     public void CloseShoopMenu()
     {

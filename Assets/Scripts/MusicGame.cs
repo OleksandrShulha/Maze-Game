@@ -4,16 +4,40 @@ using UnityEngine;
 
 public class MusicGame : MonoBehaviour
 {
-    public AudioSource audioSource;
+    public AudioSource audioSourceMusic, audioSourceSound;
 
     private void Start()
     {
-        audioSource.Play();
+        if (PlayerPrefs.GetInt("MusicOn") ==1)
+        {
+            audioSourceMusic.Play();
+            audioSourceMusic.volume = PlayerPrefs.GetFloat("MusicVolume");
+
+        }
+        else
+        {
+            audioSourceMusic.Stop();
+        }
+
+        if (PlayerPrefs.GetInt("SoundOn") == 1)
+        {
+            audioSourceSound.volume = PlayerPrefs.GetFloat("SoundVolume");
+
+        }
+        else
+        {
+            audioSourceSound.volume = 0;
+        }
+
     }
 
+    public void PlayMusic()
+    {
+        audioSourceMusic.Play();
+    }
     public void StopMusic()
     {
-        audioSource.Stop();
+        audioSourceMusic.Stop();
     }
 
 }

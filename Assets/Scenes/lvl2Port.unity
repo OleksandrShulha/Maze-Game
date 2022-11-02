@@ -14036,6 +14036,14 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 644573588}
+    - target: {fileID: 1623820861, guid: 9640918159ffa416d87e58c2db15fdd6, type: 3}
+      propertyPath: audioSourceMusic
+      value: 
+      objectReference: {fileID: 644573588}
+    - target: {fileID: 1623820861, guid: 9640918159ffa416d87e58c2db15fdd6, type: 3}
+      propertyPath: audioSourceSound
+      value: 
+      objectReference: {fileID: 146965582}
     - target: {fileID: 4849105922099757617, guid: 9640918159ffa416d87e58c2db15fdd6, type: 3}
       propertyPath: bombBtn
       value: 
