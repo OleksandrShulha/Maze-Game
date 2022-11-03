@@ -21,11 +21,7 @@ public class Menu : MonoBehaviour
     private void Awake()
     {
 
-        OsnovneMenu.SetActive(false);
-        BGImage.SetActive(false);
-        LogoImage.SetActive(true);
-        Invoke("LogoLoading", 2f);
-        Invoke("SetSettingsParametrsOnStart", 2f);
+    SetSettingsParametrsOnStart();
     }
 
     void LogoLoading()
