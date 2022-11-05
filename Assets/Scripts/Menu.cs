@@ -14,14 +14,16 @@ public class Menu : MonoBehaviour
     int coins = 0, apples = 0, bombs = 0, doors=0;
     public Button[] lvls;
 
+    public Button bayAdsOf;
+
     public Toggle musicOn, soundOn;
     public Slider musicSlider, soundSlider;
     public AudioSource audioSourceMusic;
 
     private void Awake()
     {
-
-    SetSettingsParametrsOnStart();
+        SetSettingsParametrsOnStart();
+        SetBayParametr();
     }
 
     void LogoLoading()
@@ -35,7 +37,6 @@ public class Menu : MonoBehaviour
     {
         UItextMenu();
         SetLvl();
-
     }
 
     // Update is called once per frame
@@ -44,6 +45,20 @@ public class Menu : MonoBehaviour
         PlayerPrefs.SetFloat("SoundVolume", soundSlider.value);
         PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
         audioSourceMusic.volume = PlayerPrefs.GetFloat("MusicVolume");
+    }
+
+    void SetBayParametr()
+    {
+        if (PlayerPrefs.HasKey("AdsOn") && PlayerPrefs.GetInt("AdsOn") == 0)
+        {
+            bayAdsOf.interactable = false;
+        }
+    }
+
+    public void BayAdsOff()
+    {
+        PlayerPrefs.SetInt("AdsOn", 0);
+        bayAdsOf.interactable = false;
     }
 
 
@@ -225,8 +240,30 @@ public class Menu : MonoBehaviour
 
     public void OpenScene(int index)
     {
-        SceneManager.LoadScene(index);
+
+        if (PlayerPrefs.GetInt("AdsOn") == 1)
+        {
+
+            if (!PlayerPrefs.HasKey("NumberReklama"))
+            {
+                PlayerPrefs.SetInt("NumberReklama", 1);
+                SceneManager.LoadScene(index);
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
+            {
+                    SceneManager.LoadScene(index);
+            }
+
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
+                SceneManager.LoadScene(index);
+            }
+        }
+        else
+            SceneManager.LoadScene(index);
     }
+
 
     public void MenuBtnChooseLVLActivate()
     {

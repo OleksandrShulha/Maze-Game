@@ -167,7 +167,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687017291}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 94a9698da607e486eb6a78abac0c5e58, type: 3}
@@ -269,6 +269,8 @@ GameObject:
   - component: {fileID: 4849105922099757618}
   - component: {fileID: 4849105922099757617}
   - component: {fileID: 1623820861}
+  - component: {fileID: 1623820862}
+  - component: {fileID: 2243959480034737020}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -381,8 +383,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6cee80484d44f62b3fa89e82390c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSourceMusic: {fileID: 687017293}
+  audioSourceSound: {fileID: 146965582}
+--- !u!114 &1623820862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849105922099757619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d7bdf5eef6c45d1913ca4234c509b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   audioSource: {fileID: 146965582}
   kayTake: {fileID: 8300000, guid: ffd9f48ef8b9042dbb6db6be134c7945, type: 3}
   appleShot: {fileID: 8300000, guid: 417b0a713dec648b19e79189dd5b718d, type: 3}
   looseSound: {fileID: 8300000, guid: c3043e3e8ec2345e08e30f4062bc325f, type: 3}
   winSound: {fileID: 8300000, guid: 1c69585415dd24a0faa31d1c2d34241c, type: 3}
+  doorOpen: {fileID: 8300000, guid: 13f98c139997f4bae84b175311e6392b, type: 3}
+  bompActivetion: {fileID: 8300000, guid: e5b918c00dc6048558b4219e2e3dca1a, type: 3}
+  stunMonstr: {fileID: 8300000, guid: 83c47f11269554d1c8c46fa7f271e560, type: 3}
+  deadMonst: {fileID: 8300000, guid: 4e5297f9fc117464a8b38fc195206e63, type: 3}
+  fireMonstr: {fileID: 8300000, guid: 1d2d717cc47124a9b84076f75c36582d, type: 3}
+--- !u!114 &2243959480034737020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849105922099757619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d051bf2aff04590becbe57f52c7c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
