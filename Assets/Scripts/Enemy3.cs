@@ -69,28 +69,40 @@ public class Enemy3 : MonoBehaviour
         {
             if (vectorBulet == 3 && transform.position.x > hero.transform.position.x)
             {
-                Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
-                soundGame.PlayFireMonstr();
+                if (GameObject.Find("FireBullet(Clone)") == null)
+                {
+                    Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                    soundGame.PlayFireMonstr();
+                }
             }
 
             if (vectorBulet == 1 && transform.position.x < hero.transform.position.x)
             {
-                Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
-                soundGame.PlayFireMonstr();
+                if (GameObject.Find("FireBullet(Clone)") == null)
+                {
+                    Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                    soundGame.PlayFireMonstr();
+                }
             }
         }
         if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f)
         {
             if (vectorBulet == 2 && transform.position.y > hero.transform.position.y)
             {
-                Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
-                soundGame.PlayFireMonstr();
+                if (GameObject.Find("FireBullet(Clone)") == null)
+                {
+                    Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                    soundGame.PlayFireMonstr();
+                }
             }
 
             if (vectorBulet == 4 && transform.position.y < hero.transform.position.y)
             {
-                Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
-                soundGame.PlayFireMonstr();
+                if (GameObject.Find("FireBullet(Clone)") == null)
+                {
+                    Instantiate(fireBulet, targetBullet.transform.position, transform.rotation);
+                    soundGame.PlayFireMonstr();
+                }
             }
         }
     }

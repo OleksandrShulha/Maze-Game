@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireBullet : MonoBehaviour
 {
-    float speed = 45f;
+    float speed = 40f;
     Vector3 dir;
     Hero hero;
 
@@ -20,7 +20,8 @@ public class FireBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+    private void FixedUpdate()
     {
         MoveBulet();
     }

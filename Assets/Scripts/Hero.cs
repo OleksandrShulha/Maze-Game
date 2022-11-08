@@ -261,7 +261,7 @@ public class Hero : MonoBehaviour
 
     public void Win()
     {
-        if (!PlayerPrefs.HasKey("lvl") || PlayerPrefs.GetInt("lvl") < SceneManager.GetActiveScene().buildIndex)
-            PlayerPrefs.SetInt("lvl", SceneManager.GetActiveScene().buildIndex);
+        if (!PlayerPrefs.HasKey("lvl") || PlayerPrefs.GetInt("lvl") < SceneManager.GetActiveScene().buildIndex-1)
+            PlayerPrefs.SetInt("lvl", SceneManager.GetActiveScene().buildIndex-1);
     }
 }

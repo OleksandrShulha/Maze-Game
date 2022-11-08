@@ -371,6 +371,8 @@ MonoBehaviour:
   applesBtn: {fileID: 0}
   doorBtn: {fileID: 0}
   bombBtn: {fileID: 0}
+  audioSourceMusic: {fileID: 687017293}
+  PanelBonusReward: {fileID: 0}
 --- !u!114 &1623820861
 MonoBehaviour:
   m_ObjectHideFlags: 0

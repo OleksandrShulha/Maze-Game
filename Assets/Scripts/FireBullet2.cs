@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireBullet2 : MonoBehaviour
 {
-    float speed = 45f;
+    float speed = 40f;
     Vector3 dir;
     Hero hero;
 
@@ -19,11 +19,9 @@ public class FireBullet2 : MonoBehaviour
         StartDirectionBulet();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         MoveBulet();
-
     }
 
     void MoveBulet()
@@ -65,5 +63,4 @@ public class FireBullet2 : MonoBehaviour
             FindObjectOfType<Hero>().GetComponent<Hero>().HeroDead();
         Destroy(gameObject);
     }
-
 }

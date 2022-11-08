@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+using GoogleMobileAds.Api;
+using System;
+
 public class Menu : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -19,6 +22,12 @@ public class Menu : MonoBehaviour
     public Toggle musicOn, soundOn;
     public Slider musicSlider, soundSlider;
     public AudioSource audioSourceMusic;
+
+
+    private InterstitialAd interstitial;
+    private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
+    private int numberOfLoadScene;
+
 
     private void Awake()
     {
@@ -37,6 +46,7 @@ public class Menu : MonoBehaviour
     {
         UItextMenu();
         SetLvl();
+        RequestInterstitial();
     }
 
     // Update is called once per frame
@@ -238,6 +248,8 @@ public class Menu : MonoBehaviour
         PanelItem.SetActive(false);
     }
 
+
+
     public void OpenScene(int index)
     {
 
@@ -247,22 +259,48 @@ public class Menu : MonoBehaviour
             if (!PlayerPrefs.HasKey("NumberReklama"))
             {
                 PlayerPrefs.SetInt("NumberReklama", 1);
-                SceneManager.LoadScene(index);
+                SceneManager.LoadScene(index+1);
             }
             else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
             {
-                    SceneManager.LoadScene(index);
+                PlayerPrefs.SetInt("NumberReklama", 0);
+                if (this.interstitial.IsLoaded())
+                {
+                    numberOfLoadScene = index+1;
+                    PanelChooseLVL.SetActive(false);
+                    audioSourceMusic.Stop();
+                    this.interstitial.Show();
+                }
+                else
+                    SceneManager.LoadScene(index+1);
             }
 
             else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
             {
                 PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
-                SceneManager.LoadScene(index);
+                SceneManager.LoadScene(index+1);
             }
         }
         else
-            SceneManager.LoadScene(index);
+            SceneManager.LoadScene(index+1);
     }
+
+    public void RequestInterstitial()
+    {
+        this.interstitial = new InterstitialAd(pageIDAdMob);
+        this.interstitial.OnAdClosed += HandleOnAdClosed;
+        AdRequest request = new AdRequest.Builder().Build();
+        this.interstitial.LoadAd(request);
+    }
+
+    public void HandleOnAdClosed(object sender, EventArgs args)
+    {
+        RequestInterstitial();
+        SceneManager.LoadScene(numberOfLoadScene);
+    }
+
+
+
 
 
     public void MenuBtnChooseLVLActivate()
@@ -365,4 +403,10 @@ public class Menu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+
+
+
+
+
+
 }

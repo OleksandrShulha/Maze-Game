@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using GoogleMobileAds.Api;
+using System;
 
 public class UIControl : MonoBehaviour
 {
@@ -15,14 +17,29 @@ public class UIControl : MonoBehaviour
     public Button applesBtn, doorBtn, bombBtn;
 
 
+
+    private InterstitialAd interstitial;
+    private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
+    private bool isReloadBtn = false, isExitBtn=false, isNextLvlBtn=false; 
+    public AudioSource audioSourceMusic;
+
+    private RewardedAd rewardedAd;
+    private string rewardedIDAdMob = "ca-app-pub-3940256099942544/1033173712";
+    public GameObject PanelBonusReward;
+
+
+
     void Start()
     {
+        RequestInterstitial();
+        ReguestRewerdedVideo();
         hero = FindObjectOfType<Hero>().GetComponent<Hero>();
         door = FindObjectOfType<Door>().GetComponent<Door>();
         pauseOnOff = false;
         Time.timeScale = 1f;
         hero.enabled = true;
         UItextMenu();
+
 
     }
 
@@ -41,7 +58,6 @@ public class UIControl : MonoBehaviour
 
         ActivationBonusBar();
     }
-
 
     void ActivationBonusBar()
     {
@@ -67,9 +83,6 @@ public class UIControl : MonoBehaviour
         else
             doorBtn.interactable = true;
     }
-
-
-
 
     void UItextMenu()
     {
@@ -100,16 +113,6 @@ public class UIControl : MonoBehaviour
         UIJouStick.SetActive(false);
     }
 
-    public void GetCoinsForAdsonGames()
-    {
-        if (PlayerPrefs.HasKey("coin"))
-        {
-            PlayerPrefs.SetInt("coin", PlayerPrefs.GetInt("coin") + 5);
-        }
-        else
-            PlayerPrefs.SetInt("coin", 5);
-    }
-
     public void DeadMenu()
     {
         pauseOnOff = true;
@@ -134,9 +137,6 @@ public class UIControl : MonoBehaviour
 
     }
 
-
-
-
     public void OpenDoor()
     {
         if (pauseOnOff == false && PlayerPrefs.HasKey("doors"))
@@ -151,8 +151,6 @@ public class UIControl : MonoBehaviour
 
     }
 
-
-
     public void SetDestroyAllEnemy(bool destroyAll)
     {
         if (pauseOnOff == false && PlayerPrefs.HasKey("bombs"))
@@ -166,7 +164,6 @@ public class UIControl : MonoBehaviour
         }
 
     }
-
 
     public bool GetDestroyAll()
     {
@@ -198,23 +195,213 @@ public class UIControl : MonoBehaviour
         PauseScreen.SetActive(false);
         UiControl.SetActive(true);
         UIJouStick.SetActive(true);
-
     }
 
     public void ReloadLvl()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        isReloadBtn = true;
+        if (PlayerPrefs.GetInt("AdsOn") == 1)
+        {
+            if (!PlayerPrefs.HasKey("NumberReklama"))
+            {
+                PlayerPrefs.SetInt("NumberReklama", 1);
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", 0);
+                if (this.interstitial.IsLoaded())
+                {
+                    audioSourceMusic.Stop();
+                    this.interstitial.Show();
+                }
+                else
+                {
+                    isReloadBtn = false;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
+                isReloadBtn = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+        else
+        {
+            isReloadBtn = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void ExitBtn()
     {
-        SceneManager.LoadScene(0);
+        isExitBtn = true;
+        if (PlayerPrefs.GetInt("AdsOn") == 1)
+        {
+            if (!PlayerPrefs.HasKey("NumberReklama"))
+            {
+                PlayerPrefs.SetInt("NumberReklama", 1);
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", 0);
+                if (this.interstitial.IsLoaded())
+                {
+                    audioSourceMusic.Stop();
+                    this.interstitial.Show();
+                }
+                else
+                {
+                    isExitBtn = false;
+                    SceneManager.LoadScene(1);
+                }
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
+                isExitBtn = false;
+                SceneManager.LoadScene(1);
+            }
+        }
+        else
+        {
+            isExitBtn = false;
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        isNextLvlBtn = true;
+        if (PlayerPrefs.GetInt("AdsOn") == 1)
+        {
+            if (!PlayerPrefs.HasKey("NumberReklama"))
+            {
+                PlayerPrefs.SetInt("NumberReklama", 1);
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", 0);
+                if (this.interstitial.IsLoaded())
+                {
+                    audioSourceMusic.Stop();
+                    this.interstitial.Show();
+                }
+                else
+                {
+                    isNextLvlBtn = false;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+            }
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
+            {
+                PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
+                isNextLvlBtn = false;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
+        else
+        {
+            isNextLvlBtn = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    public void RequestInterstitial()
+    {
+        this.interstitial = new InterstitialAd(pageIDAdMob);
+        this.interstitial.OnAdClosed += HandleOnAdClosed;
+        AdRequest request = new AdRequest.Builder().Build();
+        this.interstitial.LoadAd(request);
+    }
+
+    public void HandleOnAdClosed(object sender, EventArgs args)
+    {
+        RequestInterstitial();
+        if (isReloadBtn == true)
+        {
+            isReloadBtn = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        if (isExitBtn == true)
+        {
+            isExitBtn = false;
+            SceneManager.LoadScene(1);
+        }
+        if (isNextLvlBtn == true)
+        {
+            isNextLvlBtn = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        if (PlayerPrefs.GetInt("MusicOn") == 1)
+        {
+            audioSourceMusic.Play();
+            audioSourceMusic.volume = PlayerPrefs.GetFloat("MusicVolume");
+        }
     }
 
 
+
+
+
+
+    public void ReguestRewerdedVideo()
+    {
+        this.rewardedAd = new RewardedAd(rewardedIDAdMob);
+        this.rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
+        this.rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
+        this.rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
+        this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
+        this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+
+        AdRequest request = new AdRequest.Builder().Build();
+        this.rewardedAd.LoadAd(request);
+    }
+
+    public void HandleRewardedAdLoaded(object sender, EventArgs args)
+    {
+        Debug.Log("реклама загружена");
+        PanelBonusReward.SetActive(true);
+    }
+
+    public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    {
+        Debug.Log("реклама НЕ загружена");
+        PanelBonusReward.SetActive(false);
+    }
+
+    public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
+    {
+        Debug.Log("Не удалось показать");
+        PanelBonusReward.SetActive(false);
+    }
+
+    public void HandleRewardedAdClosed(object sender, EventArgs args)
+    {
+        Debug.Log("Закрыто пользователем");
+        PanelBonusReward.SetActive(false);
+    }
+
+    public void HandleUserEarnedReward(object sender, Reward args)
+    {
+        Debug.Log("Даем награду!");
+        PanelBonusReward.SetActive(false);
+        if (PlayerPrefs.HasKey("coin"))
+        {
+            PlayerPrefs.SetInt("coin", PlayerPrefs.GetInt("coin") + 5);
+        }
+        else
+            PlayerPrefs.SetInt("coin", 5);
+    }
+
+    public void StartRewardedAd()
+    {
+        if (this.rewardedAd.IsLoaded())
+        {
+            PanelBonusReward.SetActive(false);
+            audioSourceMusic.Stop();
+            this.rewardedAd.Show();
+        }
+    }
 }
