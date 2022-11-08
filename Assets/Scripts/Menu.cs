@@ -28,6 +28,10 @@ public class Menu : MonoBehaviour
     private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
     private int numberOfLoadScene;
 
+    private RewardedAd rewardedAd;
+    private string rewardedIDAdMob = "ca-app-pub-3940256099942544/5224354917";
+    public Button rewardWatch;
+
 
     private void Awake()
     {
@@ -47,6 +51,7 @@ public class Menu : MonoBehaviour
         UItextMenu();
         SetLvl();
         RequestInterstitial();
+        ReguestRewerdedVideo();
     }
 
     // Update is called once per frame
@@ -405,6 +410,57 @@ public class Menu : MonoBehaviour
     }
 
 
+    public void ReguestRewerdedVideo()
+    {
+        this.rewardedAd = new RewardedAd(rewardedIDAdMob);
+        this.rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
+        this.rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
+        this.rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
+        this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
+        this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+
+        AdRequest request = new AdRequest.Builder().Build();
+        this.rewardedAd.LoadAd(request);
+    }
+
+    public void HandleRewardedAdLoaded(object sender, EventArgs args)
+    {
+        rewardWatch.interactable = true;
+}
+
+    public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    {
+        rewardWatch.interactable = false;
+    }
+
+    public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
+    {
+        rewardWatch.interactable = false;
+    }
+
+    public void HandleRewardedAdClosed(object sender, EventArgs args)
+    {
+        rewardWatch.interactable = false;
+        SetSettingsParametrsOnStart();
+        MusicOn();
+        ReguestRewerdedVideo();
+    }
+
+    public void HandleUserEarnedReward(object sender, Reward args)
+    {
+        rewardWatch.interactable = false;
+        GetCoinsForAds(20);
+    }
+
+    public void StartRewardedAd()
+    {
+        if (this.rewardedAd.IsLoaded())
+        {
+            rewardWatch.interactable = false;
+            audioSourceMusic.Stop();
+            this.rewardedAd.Show();
+        }
+    }
 
 
 

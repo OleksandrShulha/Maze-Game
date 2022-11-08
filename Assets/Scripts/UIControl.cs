@@ -24,7 +24,7 @@ public class UIControl : MonoBehaviour
     public AudioSource audioSourceMusic;
 
     private RewardedAd rewardedAd;
-    private string rewardedIDAdMob = "ca-app-pub-3940256099942544/1033173712";
+    private string rewardedIDAdMob = "ca-app-pub-3940256099942544/5224354917";
     public GameObject PanelBonusReward;
 
 
@@ -361,31 +361,26 @@ public class UIControl : MonoBehaviour
 
     public void HandleRewardedAdLoaded(object sender, EventArgs args)
     {
-        Debug.Log("реклама загружена");
         PanelBonusReward.SetActive(true);
     }
 
     public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        Debug.Log("реклама НЕ загружена");
         PanelBonusReward.SetActive(false);
     }
 
     public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args)
     {
-        Debug.Log("Не удалось показать");
         PanelBonusReward.SetActive(false);
     }
 
     public void HandleRewardedAdClosed(object sender, EventArgs args)
     {
-        Debug.Log("Закрыто пользователем");
         PanelBonusReward.SetActive(false);
     }
 
     public void HandleUserEarnedReward(object sender, Reward args)
     {
-        Debug.Log("Даем награду!");
         PanelBonusReward.SetActive(false);
         if (PlayerPrefs.HasKey("coin"))
         {

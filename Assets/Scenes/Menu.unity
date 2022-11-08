@@ -5757,6 +5757,7 @@ MonoBehaviour:
   musicSlider: {fileID: 351015463}
   soundSlider: {fileID: 235380745}
   audioSourceMusic: {fileID: 1212528180}
+  rewardWatch: {fileID: 1714226388}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -18755,8 +18756,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 519420030}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: GetCoinsForAds
-        m_Mode: 3
+        m_MethodName: StartRewardedAd
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
