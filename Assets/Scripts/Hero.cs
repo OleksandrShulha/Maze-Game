@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class Hero : MonoBehaviour
 {
@@ -261,7 +262,30 @@ public class Hero : MonoBehaviour
 
     public void Win()
     {
-        if (!PlayerPrefs.HasKey("lvl") || PlayerPrefs.GetInt("lvl") < SceneManager.GetActiveScene().buildIndex-1)
-            PlayerPrefs.SetInt("lvl", SceneManager.GetActiveScene().buildIndex-1);
+        if (!PlayerPrefs.HasKey("lvl") || PlayerPrefs.GetInt("lvl") < SceneManager.GetActiveScene().buildIndex - 1)
+        {
+            PlayerPrefs.SetInt("lvl", SceneManager.GetActiveScene().buildIndex - 1);
+            StartCoroutine(SendGameOpen());
+        }
+    }
+
+    IEnumerator SendGameOpen()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("GameOpen", PlayerPrefs.GetInt("GameOpen"));
+        form.AddField("LVL", PlayerPrefs.GetInt("lvl"));
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/vhod.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("complete");
+            }
+        }
     }
 }

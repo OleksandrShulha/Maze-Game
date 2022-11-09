@@ -4784,7 +4784,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 411298585}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420030}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: OpenGuideMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &411298585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5684,8 +5696,6 @@ MonoBehaviour:
   PanelItem: {fileID: 1670918957}
   SettingMenu: {fileID: 408646967}
   AboutUsMenu: {fileID: 287392930}
-  BGImage: {fileID: 1492941462}
-  LogoImage: {fileID: 2076583607}
   coinText: {fileID: 1878665563}
   appleText: {fileID: 1602123606}
   bombText: {fileID: 960547065}
@@ -16562,7 +16572,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

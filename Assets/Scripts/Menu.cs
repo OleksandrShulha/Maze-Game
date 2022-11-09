@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 using GoogleMobileAds.Api;
 using System;
@@ -12,7 +13,7 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     public GameObject[] panelLvl;
     int i = 0;
-    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu, BGImage, LogoImage;
+    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu;
     public Text coinText, appleText, bombText, doorText;
     int coins = 0, apples = 0, bombs = 0, doors=0;
     public Button[] lvls;
@@ -32,18 +33,10 @@ public class Menu : MonoBehaviour
     private string rewardedIDAdMob = "ca-app-pub-3940256099942544/5224354917";
     public Button rewardWatch;
 
-
     private void Awake()
     {
         SetSettingsParametrsOnStart();
         SetBayParametr();
-    }
-
-    void LogoLoading()
-    {
-        OsnovneMenu.SetActive(true);
-        BGImage.SetActive(true);
-        LogoImage.SetActive(false);
     }
 
     void Start()
@@ -153,6 +146,7 @@ public class Menu : MonoBehaviour
                 lvls[i].GetComponentInChildren<Text>().text = "";
             }
         }
+        
     }
 
     void UItextMenu()
@@ -253,10 +247,37 @@ public class Menu : MonoBehaviour
         PanelItem.SetActive(false);
     }
 
+    public void OpenGuideMenu()
+    {
+        if (!PlayerPrefs.HasKey("ClickBTNGuide"))
+        {
+            PlayerPrefs.SetInt("ClickBTNGuide", 1);
+        }
+        else
+            PlayerPrefs.SetInt("ClickBTNGuide", PlayerPrefs.GetInt("ClickBTNGuide") + 1);
+
+        if (!PlayerPrefs.HasKey("FirstTapBTNGuide"))
+        {
+            PlayerPrefs.SetInt("FirstTapBTNGuide", 1);
+        }
+        StartCoroutine(CliclGuide());
+    }
 
 
     public void OpenScene(int index)
     {
+        if (!PlayerPrefs.HasKey("StartLVLBtn"))
+        {
+            PlayerPrefs.SetInt("StartLVLBtn", 1);
+        }
+        else
+            PlayerPrefs.SetInt("StartLVLBtn", PlayerPrefs.GetInt("StartLVLBtn") + 1);
+        if (!PlayerPrefs.HasKey("FirstGamePlay"))
+        {
+            PlayerPrefs.SetInt("FirstGamePlay", 1);
+        }
+
+        StartCoroutine(ClickPlay());
 
         if (PlayerPrefs.GetInt("AdsOn") == 1)
         {
@@ -462,7 +483,34 @@ public class Menu : MonoBehaviour
         }
     }
 
-
-
-
+    IEnumerator ClickPlay()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("StartLVLBtn", PlayerPrefs.GetInt("StartLVLBtn"));
+        form.AddField("FirstGamePlay", PlayerPrefs.GetInt("FirstGamePlay"));
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/cliclplay.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator CliclGuide()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("FirstTapBTNGuide", PlayerPrefs.GetInt("FirstTapBTNGuide"));
+        form.AddField("ClickBTNGuide", PlayerPrefs.GetInt("ClickBTNGuide"));
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/cliclguide.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
 }

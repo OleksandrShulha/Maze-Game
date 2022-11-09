@@ -21,10 +21,7 @@ public class AdsGame : MonoBehaviour
             PlayerPrefs.SetInt("AdsOn", 1);
             RequestSmallBanner();
         }
-
-
     }
-
 
     //Запуск банеров
     public void RequestBigBanner()
@@ -61,35 +58,4 @@ public class AdsGame : MonoBehaviour
         if (PlayerPrefs.GetInt("AdsOn") == 1)
             this.bannerViewSmall.Destroy();
     }
-
-
-
-    //работа с межстранічной
-    //public void StartReklamaPage()
-    //{
-    //    if (PlayerPrefs.GetInt("AdsOn") == 1)
-    //    {
-
-    //        if (!PlayerPrefs.HasKey("NumberReklama"))
-    //        {
-    //            PlayerPrefs.SetInt("NumberReklama", 1);
-    //            //RequestInterstitial();
-
-    //        }
-    //        else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
-    //        {
-    //            //RequestInterstitial();
-    //            if (this.interstitial.IsLoaded())
-    //            {
-    //                this.interstitial.Show();
-    //            }
-    //            PlayerPrefs.SetInt("NumberReklama", 0);
-    //        }
-
-    //        else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
-    //        {
-    //            PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
-    //        }
-    //    }
-    //}
 }
