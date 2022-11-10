@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 using System;
+using UnityEngine.Networking;
 
 public class UIControl : MonoBehaviour
 {
@@ -211,6 +212,15 @@ public class UIControl : MonoBehaviour
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
                 {
+                    if (!PlayerPrefs.HasKey("ADPage"))
+                    {
+                        PlayerPrefs.SetInt("ADPage", 1);
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
+                    }
+                    StartCoroutine(ADPage());
                     audioSourceMusic.Stop();
                     this.interstitial.Show();
                 }
@@ -248,6 +258,15 @@ public class UIControl : MonoBehaviour
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
                 {
+                    if (!PlayerPrefs.HasKey("ADPage"))
+                    {
+                        PlayerPrefs.SetInt("ADPage", 1);
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
+                    }
+                    StartCoroutine(ADPage());
                     audioSourceMusic.Stop();
                     this.interstitial.Show();
                 }
@@ -285,6 +304,15 @@ public class UIControl : MonoBehaviour
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
                 {
+                    if (!PlayerPrefs.HasKey("ADPage"))
+                    {
+                        PlayerPrefs.SetInt("ADPage", 1);
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
+                    }
+                    StartCoroutine(ADPage());
                     audioSourceMusic.Stop();
                     this.interstitial.Show();
                 }
@@ -397,6 +425,22 @@ public class UIControl : MonoBehaviour
             PanelBonusReward.SetActive(false);
             audioSourceMusic.Stop();
             this.rewardedAd.Show();
+        }
+    }
+
+    IEnumerator ADPage()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ADPage", PlayerPrefs.GetInt("ADPage"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ADPage.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
         }
     }
 }

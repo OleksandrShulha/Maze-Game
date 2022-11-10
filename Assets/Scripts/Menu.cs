@@ -192,21 +192,39 @@ public class Menu : MonoBehaviour
             doorText.text = doors.ToString();
     }
 
-
-
     public void OpenShoopMenu()
     {
         OsnovneMenu.SetActive(false);
         ShoopMenu.SetActive(true);
         PanelShoop.SetActive(false);
         PanelItem.SetActive(true);
-    }
 
+
+        if (!PlayerPrefs.HasKey("ClickBTNShoop"))
+        {
+            PlayerPrefs.SetInt("ClickBTNShoop", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClickBTNShoop", PlayerPrefs.GetInt("ClickBTNShoop") + 1);
+        }
+        StartCoroutine(ClickBTNShoop());
+    }
 
     public void OpenAboutUsMenu()
     {
         OsnovneMenu.SetActive(false);
         AboutUsMenu.SetActive(true);
+
+        if (!PlayerPrefs.HasKey("CkickBTNInfo"))
+        {
+            PlayerPrefs.SetInt("CkickBTNInfo", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("CkickBTNInfo", PlayerPrefs.GetInt("CkickBTNInfo") + 1);
+        }
+        StartCoroutine(CkickBTNInfo());
     }
 
     public void CloseAboutUsMenu()
@@ -215,11 +233,20 @@ public class Menu : MonoBehaviour
         AboutUsMenu.SetActive(false);
     }
 
-
     public void OpenSettingsMenu()
     {
         OsnovneMenu.SetActive(false);
         SettingMenu.SetActive(true);
+
+        if (!PlayerPrefs.HasKey("ClickBTNSettings"))
+        {
+            PlayerPrefs.SetInt("ClickBTNSettings", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClickBTNSettings", PlayerPrefs.GetInt("ClickBTNSettings") + 1);
+        }
+        StartCoroutine(ClickBTNSettings());
     }
 
     public void CloseSettingsMenu()
@@ -227,8 +254,6 @@ public class Menu : MonoBehaviour
         OsnovneMenu.SetActive(true);
         SettingMenu.SetActive(false);
     }
-
-
 
     public void CloseShoopMenu()
     {
@@ -241,10 +266,20 @@ public class Menu : MonoBehaviour
         PanelShoop.SetActive(false);
         PanelItem.SetActive(true);
     }
+
     public void OpenPanelShoop()
     {
         PanelShoop.SetActive(true);
         PanelItem.SetActive(false);
+        if (!PlayerPrefs.HasKey("ClickBTNShoopNext"))
+        {
+            PlayerPrefs.SetInt("ClickBTNShoopNext", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClickBTNShoopNext", PlayerPrefs.GetInt("ClickBTNShoopNext") + 1);
+        }
+        StartCoroutine(ClickBTNShoopNext());
     }
 
     public void OpenGuideMenu()
@@ -262,7 +297,6 @@ public class Menu : MonoBehaviour
         }
         StartCoroutine(CliclGuide());
     }
-
 
     public void OpenScene(int index)
     {
@@ -292,6 +326,15 @@ public class Menu : MonoBehaviour
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
                 {
+                    if (!PlayerPrefs.HasKey("ADPage"))
+                    {
+                        PlayerPrefs.SetInt("ADPage", 1);
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
+                    }
+                    StartCoroutine(ADPage());
                     numberOfLoadScene = index+1;
                     PanelChooseLVL.SetActive(false);
                     audioSourceMusic.Stop();
@@ -324,10 +367,6 @@ public class Menu : MonoBehaviour
         RequestInterstitial();
         SceneManager.LoadScene(numberOfLoadScene);
     }
-
-
-
-
 
     public void MenuBtnChooseLVLActivate()
     {
@@ -396,6 +435,17 @@ public class Menu : MonoBehaviour
             PlayerPrefs.SetInt("apples", apples);
             coinText.text = coins.ToString();
             PlayerPrefs.SetInt("coin", coins);
+
+            if (!PlayerPrefs.HasKey("BayApple"))
+            {
+                PlayerPrefs.SetInt("BayApple", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("BayApple", PlayerPrefs.GetInt("BayApple") + 1);
+            }
+            StartCoroutine(ByAppleInShoop());
+
         }
     }
 
@@ -409,6 +459,16 @@ public class Menu : MonoBehaviour
             PlayerPrefs.SetInt("bombs", bombs);
             coinText.text = coins.ToString();
             PlayerPrefs.SetInt("coin", coins);
+
+            if (!PlayerPrefs.HasKey("BayBomb"))
+            {
+                PlayerPrefs.SetInt("BayBomb", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("BayBomb", PlayerPrefs.GetInt("BayBomb") + 1);
+            }
+            StartCoroutine(ByBombsInShoop());
         }
     }
 
@@ -422,6 +482,16 @@ public class Menu : MonoBehaviour
             PlayerPrefs.SetInt("doors", doors);
             coinText.text = coins.ToString();
             PlayerPrefs.SetInt("coin", coins);
+
+            if (!PlayerPrefs.HasKey("BayDoor"))
+            {
+                PlayerPrefs.SetInt("BayDoor", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("BayDoor", PlayerPrefs.GetInt("BayDoor") + 1);
+            }
+            StartCoroutine(ByDorsInShoop());
         }
     }
 
@@ -470,7 +540,8 @@ public class Menu : MonoBehaviour
     public void HandleUserEarnedReward(object sender, Reward args)
     {
         rewardWatch.interactable = false;
-        GetCoinsForAds(20);
+        //Указать коректний бонус!!!
+        GetCoinsForAds(1000);
     }
 
     public void StartRewardedAd()
@@ -505,6 +576,129 @@ public class Menu : MonoBehaviour
         form.AddField("FirstTapBTNGuide", PlayerPrefs.GetInt("FirstTapBTNGuide"));
         form.AddField("ClickBTNGuide", PlayerPrefs.GetInt("ClickBTNGuide"));
         using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/cliclguide.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ByAppleInShoop()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("BayApple", PlayerPrefs.GetInt("BayApple"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ByApple.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ByBombsInShoop()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("BayBomb", PlayerPrefs.GetInt("BayBomb"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/BayBomb.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ByDorsInShoop()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("BayDoor", PlayerPrefs.GetInt("BayDoor"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/BayDoor.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ClickBTNShoopNext()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ClickBTNShoopNext", PlayerPrefs.GetInt("ClickBTNShoopNext"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickBTNShoopNext.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ClickBTNShoop()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ClickBTNShoop", PlayerPrefs.GetInt("ClickBTNShoop"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickBTNShoop.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator CkickBTNInfo()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("CkickBTNInfo", PlayerPrefs.GetInt("CkickBTNInfo"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/CkickBTNInfo.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+
+    IEnumerator ClickBTNSettings()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ClickBTNSettings", PlayerPrefs.GetInt("ClickBTNSettings"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickBTNSettings.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+
+
+    IEnumerator ADPage()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ADPage", PlayerPrefs.GetInt("ADPage"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ADPage.php", form))
         {
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
