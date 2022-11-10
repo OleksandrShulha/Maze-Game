@@ -540,12 +540,31 @@ public class Menu : MonoBehaviour
     public void HandleUserEarnedReward(object sender, Reward args)
     {
         rewardWatch.interactable = false;
+        if (!PlayerPrefs.HasKey("ShopADBonus"))
+        {
+            PlayerPrefs.SetInt("ShopADBonus", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ShopADBonus", PlayerPrefs.GetInt("ShopADBonus") + 1);
+        }
+        StartCoroutine(ShopADBonus());
         //Указать коректний бонус!!!
         GetCoinsForAds(1000);
+
     }
 
     public void StartRewardedAd()
     {
+        if (!PlayerPrefs.HasKey("ClickADShop"))
+        {
+            PlayerPrefs.SetInt("ClickADShop", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClickADShop", PlayerPrefs.GetInt("ClickADShop") + 1);
+        }
+        StartCoroutine(ClickADShop());
         if (this.rewardedAd.IsLoaded())
         {
             rewardWatch.interactable = false;
@@ -674,7 +693,6 @@ public class Menu : MonoBehaviour
             }
         }
     }
-
     IEnumerator ClickBTNSettings()
     {
         WWWForm form = new WWWForm();
@@ -690,8 +708,6 @@ public class Menu : MonoBehaviour
             }
         }
     }
-
-
     IEnumerator ADPage()
     {
         WWWForm form = new WWWForm();
@@ -699,6 +715,36 @@ public class Menu : MonoBehaviour
         form.AddField("ADPage", PlayerPrefs.GetInt("ADPage"));
 
         using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ADPage.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ClickADShop()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ClickADShop", PlayerPrefs.GetInt("ClickADShop"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickADShop.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ShopADBonus()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ShopADBonus", PlayerPrefs.GetInt("ShopADBonus"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ShopADBonus.php", form))
         {
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)

@@ -28,6 +28,9 @@ public class Hero : MonoBehaviour
     public MusicGame musicGame;
     public SoundGame soundGame;
 
+    bool destrEnemy1LVL = false;
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -38,6 +41,17 @@ public class Hero : MonoBehaviour
     {
         AnimationHero();
         AtackHero();
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 1 && destrEnemy1LVL==false)
+        {
+            if(GameObject.Find("Enemy1") == null)
+            {
+                StartCoroutine(DeastroeEnemy1LVL());
+                destrEnemy1LVL = true;
+                Debug.Log("Нет врагов");
+
+            }
+        }
     }
 
 
@@ -178,6 +192,7 @@ public class Hero : MonoBehaviour
         {
             door.SetDoorIsOpen(true);
             soundGame.PlayDoorOpen();
+            StartCoroutine(TakeAllKays());
         }
     }
 
@@ -215,7 +230,8 @@ public class Hero : MonoBehaviour
         isDead = true;
         musicGame.StopMusic();
         soundGame.PlayLoose();
-        //gameObject.SetActive(false);
+        StartCoroutine(HeroDeadAnalitic());
+
     }
 
     public bool GetIsDead()
@@ -288,4 +304,143 @@ public class Hero : MonoBehaviour
             }
         }
     }
+
+    IEnumerator TakeAllKays()
+    {
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 1)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("TakeAllKeas1LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/TakeAllKeas1LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 2)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("TakeAllKeas2LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/TakeAllKeas2LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 3)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("TakeAllKeas3LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/TakeAllKeas3LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 4)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("TakeAllKeas4LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/TakeAllKeas4LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+    }
+
+    IEnumerator DeastroeEnemy1LVL()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("DeastroeEnemy1LVL", 1);
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/DeastroeEnemy1LVL.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("complete");
+            }
+        }
+    }
+
+    IEnumerator HeroDeadAnalitic()
+    {
+
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 3)
+        {
+            if (!PlayerPrefs.HasKey("Dead3LVL"))
+            {
+                PlayerPrefs.SetInt("Dead3LVL", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("Dead3LVL", PlayerPrefs.GetInt("Dead3LVL") + 1);
+            }
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("Dead3LVL", PlayerPrefs.GetInt("Dead3LVL"));
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Dead3LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 4)
+        {
+            if (!PlayerPrefs.HasKey("Dead4LVL"))
+            {
+                PlayerPrefs.SetInt("Dead4LVL", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("Dead4LVL", PlayerPrefs.GetInt("Dead4LVL") + 1);
+            }
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("Dead4LVL", PlayerPrefs.GetInt("Dead4LVL"));
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Dead4LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+    }
+
+
 }

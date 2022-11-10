@@ -29,7 +29,6 @@ public class UIControl : MonoBehaviour
     public GameObject PanelBonusReward;
 
 
-
     void Start()
     {
         RequestInterstitial();
@@ -40,8 +39,7 @@ public class UIControl : MonoBehaviour
         Time.timeScale = 1f;
         hero.enabled = true;
         UItextMenu();
-
-
+        StartCoroutine(LoadLVL());
     }
 
     // Update is called once per frame
@@ -200,6 +198,17 @@ public class UIControl : MonoBehaviour
 
     public void ReloadLvl()
     {
+        if (!PlayerPrefs.HasKey("RestartLVL"))
+        {
+            PlayerPrefs.SetInt("RestartLVL", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("RestartLVL", PlayerPrefs.GetInt("RestartLVL") + 1);
+        }
+        StartCoroutine(RestartLVL());
+        StartCoroutine(RestartLVLOnLVL());
+
         isReloadBtn = true;
         if (PlayerPrefs.GetInt("AdsOn") == 1)
         {
@@ -369,11 +378,6 @@ public class UIControl : MonoBehaviour
         }
     }
 
-
-
-
-
-
     public void ReguestRewerdedVideo()
     {
         this.rewardedAd = new RewardedAd(rewardedIDAdMob);
@@ -409,6 +413,16 @@ public class UIControl : MonoBehaviour
 
     public void HandleUserEarnedReward(object sender, Reward args)
     {
+        if (!PlayerPrefs.HasKey("WinGameBouns"))
+        {
+            PlayerPrefs.SetInt("WinGameBouns", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("WinGameBouns", PlayerPrefs.GetInt("WinGameBouns") + 1);
+        }
+        StartCoroutine(WinGameBouns());
+
         PanelBonusReward.SetActive(false);
         if (PlayerPrefs.HasKey("coin"))
         {
@@ -420,6 +434,16 @@ public class UIControl : MonoBehaviour
 
     public void StartRewardedAd()
     {
+        if (!PlayerPrefs.HasKey("ClickADWinGame"))
+        {
+            PlayerPrefs.SetInt("ClickADWinGame", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ClickADWinGame", PlayerPrefs.GetInt("ClickADWinGame") + 1);
+        }
+        StartCoroutine(ClickADWinGame());
+
         if (this.rewardedAd.IsLoaded())
         {
             PanelBonusReward.SetActive(false);
@@ -440,6 +464,214 @@ public class UIControl : MonoBehaviour
             if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator ClickADWinGame()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("ClickADWinGame", PlayerPrefs.GetInt("ClickADWinGame"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickADWinGame.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator WinGameBouns()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("WinGameBouns", PlayerPrefs.GetInt("WinGameBouns"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/WinGameBouns.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+    IEnumerator RestartLVL()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("login", PlayerPrefs.GetInt("login"));
+        form.AddField("RestartLVL", PlayerPrefs.GetInt("RestartLVL"));
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/RestartLVL.php", form))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+        }
+    }
+
+    IEnumerator LoadLVL()
+    {
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 1)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("Load1LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Load1LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 2)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("Load2LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Load2LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 3)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("Load3LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Load3LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 4)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("Load4LVL", 1);
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Load4LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+    }
+
+
+    IEnumerator RestartLVLOnLVL()
+    {
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 1)
+        {
+            if (!PlayerPrefs.HasKey("ClickRestart1LVL"))
+            {
+                PlayerPrefs.SetInt("ClickRestart1LVL", 1);
+            }
+            else
+                PlayerPrefs.SetInt("ClickRestart1LVL", PlayerPrefs.GetInt("ClickRestart1LVL") + 1);
+
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("ClickRestart1LVL", PlayerPrefs.GetInt("ClickRestart1LVL"));
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickRestart1LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 2)
+        {
+            if (!PlayerPrefs.HasKey("ClickRestart2LVL"))
+            {
+                PlayerPrefs.SetInt("ClickRestart2LVL", 1);
+            }
+            else
+                PlayerPrefs.SetInt("ClickRestart2LVL", PlayerPrefs.GetInt("ClickRestart2LVL") + 1);
+
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("ClickRestart2LVL", PlayerPrefs.GetInt("ClickRestart2LVL"));
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickRestart2LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 3)
+        {
+            if (!PlayerPrefs.HasKey("ClickRestart3LVL"))
+            {
+                PlayerPrefs.SetInt("ClickRestart3LVL", 1);
+            }
+            else
+                PlayerPrefs.SetInt("ClickRestart3LVL", PlayerPrefs.GetInt("ClickRestart3LVL") + 1);
+
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("ClickRestart3LVL", PlayerPrefs.GetInt("ClickRestart3LVL"));
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickRestart3LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+            }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex - 1 == 4)
+        {
+            if (!PlayerPrefs.HasKey("ClickRestart4LVL"))
+            {
+                PlayerPrefs.SetInt("ClickRestart4LVL", 1);
+            }
+            else
+                PlayerPrefs.SetInt("ClickRestart4LVL", PlayerPrefs.GetInt("ClickRestart4LVL") + 1);
+
+            WWWForm form = new WWWForm();
+            form.AddField("login", PlayerPrefs.GetInt("login"));
+            form.AddField("ClickRestart4LVL", PlayerPrefs.GetInt("ClickRestart4LVL"));
+
+            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/ClickRestart4LVL.php", form))
+            {
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
             }
         }
     }
