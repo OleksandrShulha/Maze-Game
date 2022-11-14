@@ -48,8 +48,6 @@ public class Hero : MonoBehaviour
             {
                 StartCoroutine(DeastroeEnemy1LVL());
                 destrEnemy1LVL = true;
-                Debug.Log("Нет врагов");
-
             }
         }
     }
@@ -230,8 +228,6 @@ public class Hero : MonoBehaviour
         isDead = true;
         musicGame.StopMusic();
         soundGame.PlayLoose();
-        StartCoroutine(HeroDeadAnalitic());
-
     }
 
     public bool GetIsDead()
@@ -388,59 +384,4 @@ public class Hero : MonoBehaviour
             }
         }
     }
-
-    IEnumerator HeroDeadAnalitic()
-    {
-
-
-        if (SceneManager.GetActiveScene().buildIndex - 1 == 3)
-        {
-            if (!PlayerPrefs.HasKey("Dead3LVL"))
-            {
-                PlayerPrefs.SetInt("Dead3LVL", 1);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("Dead3LVL", PlayerPrefs.GetInt("Dead3LVL") + 1);
-            }
-            WWWForm form = new WWWForm();
-            form.AddField("login", PlayerPrefs.GetInt("login"));
-            form.AddField("Dead3LVL", PlayerPrefs.GetInt("Dead3LVL"));
-
-            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Dead3LVL.php", form))
-            {
-                yield return www.SendWebRequest();
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log(www.error);
-                }
-            }
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex - 1 == 4)
-        {
-            if (!PlayerPrefs.HasKey("Dead4LVL"))
-            {
-                PlayerPrefs.SetInt("Dead4LVL", 1);
-            }
-            else
-            {
-                PlayerPrefs.SetInt("Dead4LVL", PlayerPrefs.GetInt("Dead4LVL") + 1);
-            }
-            WWWForm form = new WWWForm();
-            form.AddField("login", PlayerPrefs.GetInt("login"));
-            form.AddField("Dead4LVL", PlayerPrefs.GetInt("Dead4LVL"));
-
-            using (UnityWebRequest www = UnityWebRequest.Post("https://artixdev.com/MazeGame2/Dead4LVL.php", form))
-            {
-                yield return www.SendWebRequest();
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log(www.error);
-                }
-            }
-        }
-    }
-
-
 }

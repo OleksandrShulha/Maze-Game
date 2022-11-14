@@ -321,7 +321,7 @@ public class Menu : MonoBehaviour
                 PlayerPrefs.SetInt("NumberReklama", 1);
                 SceneManager.LoadScene(index+1);
             }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 4)
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 3)
             {
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
@@ -344,7 +344,7 @@ public class Menu : MonoBehaviour
                     SceneManager.LoadScene(index+1);
             }
 
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 4)
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 3)
             {
                 PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
                 SceneManager.LoadScene(index+1);

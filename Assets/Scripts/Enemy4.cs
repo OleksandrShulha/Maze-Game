@@ -131,22 +131,28 @@ public class Enemy4 : MonoBehaviour
             {
                 transform.rotation = Quaternion.Euler(0, 0, 270);
                 vectorBulet = 3;
-                if (GameObject.Find("FireBullet2(Clone)") == null)
-                {
-                    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
-                    soundGame.PlayFireMonstr();
-                }
+                Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
+
+                //if (GameObject.Find("FireBullet2(Clone)") == null)
+                //{
+                //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                //    soundGame.PlayFireMonstr();
+                //}
             }
 
             if (transform.position.x < hero.transform.position.x)
             {
                 transform.rotation = Quaternion.Euler(0, 0, 90);
                 vectorBulet = 1;
-                if (GameObject.Find("FireBullet2(Clone)") == null)
-                {
-                    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
-                    soundGame.PlayFireMonstr();
-                }
+                Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
+
+                //if (GameObject.Find("FireBullet2(Clone)") == null)
+                //{
+                //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                //    soundGame.PlayFireMonstr();
+                //}
 
             }
         }
@@ -156,22 +162,28 @@ public class Enemy4 : MonoBehaviour
             {
                 transform.rotation = Quaternion.Euler(0, 0, 0);
                 vectorBulet = 2;
-                if (GameObject.Find("FireBullet2(Clone)") == null)
-                {
-                    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
-                    soundGame.PlayFireMonstr();
-                }
+                Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
+
+                //if (GameObject.Find("FireBullet2(Clone)") == null)
+                //{
+                //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                //    soundGame.PlayFireMonstr();
+                //}
             }
 
             if (transform.position.y < hero.transform.position.y)
             {
                 transform.rotation = Quaternion.Euler(0, 0, 180);
                 vectorBulet = 4;
-                if (GameObject.Find("FireBullet2(Clone)") == null)
-                {
-                    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
-                    soundGame.PlayFireMonstr();
-                }
+                Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                soundGame.PlayFireMonstr();
+
+                //if (GameObject.Find("FireBullet2(Clone)") == null)
+                //{
+                //    Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
+                //    soundGame.PlayFireMonstr();
+                //}
             }
         }
     }
