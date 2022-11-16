@@ -22,6 +22,9 @@ public class Enemy3 : MonoBehaviour
     private int vectorBulet; //1-right, 2-down, 3-left,4-up
     UIControl destroyAll;
 
+    public Transform rayPosition;
+    RaycastHit2D infoDownCenter;
+
     public SoundGame soundGame;
 
     void Start()
@@ -53,19 +56,57 @@ public class Enemy3 : MonoBehaviour
     void SetVectorBulelt()
     {
         if (isDown)
+        {
             vectorBulet = 2;
+        }
         if (isUp)
+        {
             vectorBulet = 4;
+        }
         if (isRight)
+        {
             vectorBulet = 1;
+        }
         if (isLeft)
+        {
             vectorBulet = 3;
+        }
+
+    }
+
+    void SetRayCastTarget()
+    {
+        if (isDown)
+        {
+            vectorBulet = 2;
+            infoDownCenter = Physics2D.Raycast(rayPosition.position, Vector2.down, 20f);
+        }
+        if (isUp)
+        {
+            vectorBulet = 4;
+            infoDownCenter = Physics2D.Raycast(rayPosition.position, Vector2.up, 20f);
+
+        }
+        if (isRight)
+        {
+            vectorBulet = 1;
+            infoDownCenter = Physics2D.Raycast(rayPosition.position, Vector2.right, 20f);
+
+        }
+        if (isLeft)
+        {
+            vectorBulet = 3;
+            infoDownCenter = Physics2D.Raycast(rayPosition.position, Vector2.left, 20f);
+        }
+
     }
 
 
     void AtackEnemy()
     {
-        if (Mathf.Abs(transform.position.y - hero.transform.position.y) < 1f)
+
+        SetRayCastTarget();
+        if (Mathf.Abs(transform.position.y - hero.transform.position.y) < 1f && infoDownCenter.collider.name=="Hero")
         {
             if (vectorBulet == 3 && transform.position.x > hero.transform.position.x)
             {
@@ -85,7 +126,7 @@ public class Enemy3 : MonoBehaviour
                 }
             }
         }
-        if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f)
+        if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f && infoDownCenter.collider.name == "Hero")
         {
             if (vectorBulet == 2 && transform.position.y > hero.transform.position.y)
             {

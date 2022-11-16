@@ -19,7 +19,6 @@ public class GuideScripts : MonoBehaviour
         if(textInfo.GetComponent<Text>().color.a >= 0f)
         {
             StartCoroutine(DeactiveGuideText());
-            Debug.Log("Work");
         }
     }
 }
