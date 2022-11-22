@@ -106,7 +106,7 @@ public class Enemy3 : MonoBehaviour
     {
 
         SetRayCastTarget();
-        if (Mathf.Abs(transform.position.y - hero.transform.position.y) < 1f && infoDownCenter.collider.name=="Hero")
+        if (Mathf.Abs(transform.position.y - hero.transform.position.y) < 1f && (infoDownCenter.collider.name=="Hero" || infoDownCenter.collider.name == "Door"))
         {
             if (vectorBulet == 3 && transform.position.x > hero.transform.position.x)
             {
@@ -126,7 +126,7 @@ public class Enemy3 : MonoBehaviour
                 }
             }
         }
-        if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f && infoDownCenter.collider.name == "Hero")
+        if (Mathf.Abs(transform.position.x - hero.transform.position.x) < 1f && (infoDownCenter.collider.name == "Hero" || infoDownCenter.collider.name == "Door"))
         {
             if (vectorBulet == 2 && transform.position.y > hero.transform.position.y)
             {

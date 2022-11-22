@@ -108,6 +108,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   buletStartPosition: {fileID: 2693318497111960909}
   joystickUp: 0
   joystickDown: 0
@@ -192,7 +194,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2693318497111960909}
   - component: {fileID: 2693318497111960908}
-  - component: {fileID: 757905443}
   m_Layer: 2
   m_Name: Target
   m_TagString: TargetHero
@@ -231,16 +232,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.066508055
---- !u!114 &757905443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2693318497111960906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51f717ed09cc64a93a22a5e972c8b5e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundGame: {fileID: 0}

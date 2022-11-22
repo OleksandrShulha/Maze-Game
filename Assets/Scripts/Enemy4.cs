@@ -138,7 +138,7 @@ public class Enemy4 : MonoBehaviour
                 //Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //soundGame.PlayFireMonstr();
 
-                if (GameObject.Find("FireBullet2(Clone)") == null && infoDownCenter.collider.name == "Hero")
+                if (GameObject.Find("FireBullet2(Clone)") == null && (infoDownCenter.collider.name == "Hero" || infoDownCenter.collider.name == "Door"))
                 {
                     Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                     soundGame.PlayFireMonstr();
@@ -153,7 +153,7 @@ public class Enemy4 : MonoBehaviour
                 //Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //soundGame.PlayFireMonstr();
 
-                if (GameObject.Find("FireBullet2(Clone)") == null && infoDownCenter.collider.name == "Hero")
+                if (GameObject.Find("FireBullet2(Clone)") == null && (infoDownCenter.collider.name == "Hero" || infoDownCenter.collider.name == "Door"))
                 {
                     Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                     soundGame.PlayFireMonstr();
@@ -171,7 +171,7 @@ public class Enemy4 : MonoBehaviour
                 //Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //soundGame.PlayFireMonstr();
 
-                if (GameObject.Find("FireBullet2(Clone)") == null && infoDownCenter.collider.name == "Hero")
+                if (GameObject.Find("FireBullet2(Clone)") == null && (infoDownCenter.collider.name == "Hero" || infoDownCenter.collider.name == "Door"))
                 {
                     Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                     soundGame.PlayFireMonstr();
@@ -186,7 +186,7 @@ public class Enemy4 : MonoBehaviour
                 //Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                 //soundGame.PlayFireMonstr();
 
-                if (GameObject.Find("FireBullet2(Clone)") == null && infoDownCenter.collider.name == "Hero")
+                if (GameObject.Find("FireBullet2(Clone)") == null && (infoDownCenter.collider.name == "Hero" || infoDownCenter.collider.name == "Door"))
                 {
                     Instantiate(fireBulet2, targetBullet.transform.position, transform.rotation);
                     soundGame.PlayFireMonstr();

@@ -193,6 +193,40 @@ public class Hero : MonoBehaviour
             StartCoroutine(TakeAllKays());
         }
     }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Apple")
+    //    {
+    //        collision.gameObject.SetActive(false);
+    //        SetAmountApples(2);
+    //    }
+
+    //    if (collision.gameObject.tag == "Key")
+    //    {
+    //            soundGame.PlaykayTakeSound();
+    //            collision.gameObject.SetActive(false);
+    //            SetAmountKey(1);
+    //            ExamWinLvl();
+    //    }
+    //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Apple")
+        {
+            collision.gameObject.SetActive(false);
+            SetAmountApples(2);
+        }
+
+        if (collision.gameObject.tag == "Key")
+        {
+            soundGame.PlaykayTakeSound();
+            collision.gameObject.SetActive(false);
+            SetAmountKey(1);
+            ExamWinLvl();
+        }
+    }
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
