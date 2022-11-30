@@ -13,7 +13,7 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     public GameObject[] panelLvl;
     int i = 0;
-    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu;
+    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu, bayAdsOf2, Logo;
     public Text coinText, appleText, bombText, doorText;
     int coins = 0, apples = 0, bombs = 0, doors=0;
     public Button[] lvls;
@@ -23,7 +23,6 @@ public class Menu : MonoBehaviour
     public Toggle musicOn, soundOn;
     public Slider musicSlider, soundSlider;
     public AudioSource audioSourceMusic;
-
 
     private InterstitialAd interstitial;
     private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
@@ -60,6 +59,7 @@ public class Menu : MonoBehaviour
         if (PlayerPrefs.HasKey("AdsOn") && PlayerPrefs.GetInt("AdsOn") == 0)
         {
             bayAdsOf.interactable = false;
+            bayAdsOf2.SetActive(false); 
         }
     }
 
@@ -67,6 +67,7 @@ public class Menu : MonoBehaviour
     {
         PlayerPrefs.SetInt("AdsOn", 0);
         bayAdsOf.interactable = false;
+        bayAdsOf2.SetActive(false);
     }
 
 
@@ -198,6 +199,7 @@ public class Menu : MonoBehaviour
         ShoopMenu.SetActive(true);
         PanelShoop.SetActive(false);
         PanelItem.SetActive(true);
+        Logo.SetActive(false);
 
 
         if (!PlayerPrefs.HasKey("ClickBTNShoop"))
@@ -259,6 +261,7 @@ public class Menu : MonoBehaviour
     {
         OsnovneMenu.SetActive(true);
         ShoopMenu.SetActive(false);
+        Logo.SetActive(true);
     }
 
     public void OpenPanelItem()
@@ -315,17 +318,9 @@ public class Menu : MonoBehaviour
 
         if (PlayerPrefs.GetInt("AdsOn") == 1)
         {
-
-            if (!PlayerPrefs.HasKey("NumberReklama"))
-            {
-                PlayerPrefs.SetInt("NumberReklama", 1);
-                SceneManager.LoadScene(index+1);
-            }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 3)
-            {
-                PlayerPrefs.SetInt("NumberReklama", 0);
-                if (this.interstitial.IsLoaded())
+            if (this.interstitial.IsLoaded() && index != 1)
                 {
+                    PlayerPrefs.SetInt("NumberReklama", 0);
                     if (!PlayerPrefs.HasKey("ADPage"))
                     {
                         PlayerPrefs.SetInt("ADPage", 1);
@@ -335,20 +330,47 @@ public class Menu : MonoBehaviour
                         PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
                     }
                     StartCoroutine(ADPage());
-                    numberOfLoadScene = index+1;
+                    numberOfLoadScene = index + 1;
                     PanelChooseLVL.SetActive(false);
                     audioSourceMusic.Stop();
                     this.interstitial.Show();
                 }
                 else
-                    SceneManager.LoadScene(index+1);
-            }
+                    SceneManager.LoadScene(index + 1);
+            
+            //if (!PlayerPrefs.HasKey("NumberReklama"))
+            //{
+            //    PlayerPrefs.SetInt("NumberReklama", 1);
+            //    SceneManager.LoadScene(index+1);
+            //}
+            //else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == colReklam)
+            //{
+            //    PlayerPrefs.SetInt("NumberReklama", 0);
+            //    if (this.interstitial.IsLoaded())
+            //    {
+            //        if (!PlayerPrefs.HasKey("ADPage"))
+            //        {
+            //            PlayerPrefs.SetInt("ADPage", 1);
+            //        }
+            //        else
+            //        {
+            //            PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
+            //        }
+            //        StartCoroutine(ADPage());
+            //        numberOfLoadScene = index+1;
+            //        PanelChooseLVL.SetActive(false);
+            //        audioSourceMusic.Stop();
+            //        this.interstitial.Show();
+            //    }
+            //    else
+            //        SceneManager.LoadScene(index+1);
+            //}
 
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 3)
-            {
-                PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
-                SceneManager.LoadScene(index+1);
-            }
+            //else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < colReklam)
+            //{
+            //    PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
+            //    SceneManager.LoadScene(index+1);
+            //}
         }
         else
             SceneManager.LoadScene(index+1);

@@ -18,7 +18,7 @@ public class UIControl : MonoBehaviour
     public Button applesBtn, doorBtn, bombBtn;
 
 
-
+    int colReklam = 2;
     private InterstitialAd interstitial;
     private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
     private bool isReloadBtn = false, isExitBtn=false, isNextLvlBtn=false; 
@@ -216,7 +216,7 @@ public class UIControl : MonoBehaviour
             {
                 PlayerPrefs.SetInt("NumberReklama", 1);
             }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 3)
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == colReklam)
             {
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
@@ -239,7 +239,7 @@ public class UIControl : MonoBehaviour
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
             }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 3)
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < colReklam)
             {
                 PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
                 isReloadBtn = false;
@@ -262,7 +262,7 @@ public class UIControl : MonoBehaviour
             {
                 PlayerPrefs.SetInt("NumberReklama", 1);
             }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 3)
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == colReklam)
             {
                 PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
@@ -285,7 +285,7 @@ public class UIControl : MonoBehaviour
                     SceneManager.LoadScene(1);
                 }
             }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 3)
+            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < colReklam)
             {
                 PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
                 isExitBtn = false;
@@ -304,15 +304,9 @@ public class UIControl : MonoBehaviour
         isNextLvlBtn = true;
         if (PlayerPrefs.GetInt("AdsOn") == 1)
         {
-            if (!PlayerPrefs.HasKey("NumberReklama"))
-            {
-                PlayerPrefs.SetInt("NumberReklama", 1);
-            }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == 3)
-            {
-                PlayerPrefs.SetInt("NumberReklama", 0);
                 if (this.interstitial.IsLoaded())
                 {
+                    PlayerPrefs.SetInt("NumberReklama", 0);
                     if (!PlayerPrefs.HasKey("ADPage"))
                     {
                         PlayerPrefs.SetInt("ADPage", 1);
@@ -330,13 +324,6 @@ public class UIControl : MonoBehaviour
                     isNextLvlBtn = false;
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 }
-            }
-            else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < 3)
-            {
-                PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
-                isNextLvlBtn = false;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
         }
         else
         {

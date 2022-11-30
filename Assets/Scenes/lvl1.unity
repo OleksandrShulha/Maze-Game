@@ -14088,6 +14088,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1623820862}
     - target: {fileID: 2693318496075399492, guid: be6cb8c8056b24065962cd9c409873b4, type: 3}
+      propertyPath: amountKeyOnMap.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693318496075399492, guid: be6cb8c8056b24065962cd9c409873b4, type: 3}
       propertyPath: amountKeyOnMap.Array.data[0]
       value: 
       objectReference: {fileID: 1427774387}
