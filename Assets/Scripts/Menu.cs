@@ -13,7 +13,7 @@ public class Menu : MonoBehaviour
     // Start is called before the first frame update
     public GameObject[] panelLvl;
     int i = 0;
-    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu, bayAdsOf2, Logo;
+    public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu, bayAdsOf2, bayAdsOf3, Logo;
     public Text coinText, appleText, bombText, doorText;
     int coins = 0, apples = 0, bombs = 0, doors=0;
     public Button[] lvls;
@@ -68,6 +68,7 @@ public class Menu : MonoBehaviour
         PlayerPrefs.SetInt("AdsOn", 0);
         bayAdsOf.interactable = false;
         bayAdsOf2.SetActive(false);
+        bayAdsOf3.SetActive(false);
     }
 
 
@@ -394,8 +395,6 @@ public class Menu : MonoBehaviour
     {
         OsnovneMenu.SetActive(false);
         PanelChooseLVL.SetActive(true);
-
-
     }
 
     public void MenuBtnBackLVLChoose()
