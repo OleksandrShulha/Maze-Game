@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервис
+
 
 using GoogleMobileAds.Api;
 using System;
 
-public class Menu : MonoBehaviour
+public class Menu : MonoBehaviour //для получения сообщений Unity Purchasing
 {
-    // Start is called before the first frame update
     public GameObject[] panelLvl;
     int i = 0;
     public GameObject PanelChooseLVL, OsnovneMenu, ShoopMenu, PanelShoop, PanelItem, SettingMenu, AboutUsMenu, bayAdsOf2, bayAdsOf3, Logo;
     public Text coinText, appleText, bombText, doorText;
-    int coins = 0, apples = 0, bombs = 0, doors=0;
+    int coins = 0, apples = 0, bombs = 0, doors = 0;
     public Button[] lvls;
 
     public Button bayAdsOf;
@@ -31,6 +32,7 @@ public class Menu : MonoBehaviour
     private RewardedAd rewardedAd;
     private string rewardedIDAdMob = "ca-app-pub-3940256099942544/5224354917";
     public Button rewardWatch;
+
 
     private void Awake()
     {
@@ -59,7 +61,7 @@ public class Menu : MonoBehaviour
         if (PlayerPrefs.HasKey("AdsOn") && PlayerPrefs.GetInt("AdsOn") == 0)
         {
             bayAdsOf.interactable = false;
-            bayAdsOf2.SetActive(false); 
+            bayAdsOf2.SetActive(false);
         }
     }
 
@@ -70,7 +72,6 @@ public class Menu : MonoBehaviour
         bayAdsOf2.SetActive(false);
         bayAdsOf3.SetActive(false);
     }
-
 
     void SetSettingsParametrsOnStart()
     {
@@ -109,7 +110,7 @@ public class Menu : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("SoundOn", 0);
-   
+
         }
     }
 
@@ -148,7 +149,7 @@ public class Menu : MonoBehaviour
                 lvls[i].GetComponentInChildren<Text>().text = "";
             }
         }
-        
+
     }
 
     void UItextMenu()
@@ -320,61 +321,27 @@ public class Menu : MonoBehaviour
         if (PlayerPrefs.GetInt("AdsOn") == 1)
         {
             if (this.interstitial.IsLoaded() && index != 1)
+            {
+                PlayerPrefs.SetInt("NumberReklama", 0);
+                if (!PlayerPrefs.HasKey("ADPage"))
                 {
-                    PlayerPrefs.SetInt("NumberReklama", 0);
-                    if (!PlayerPrefs.HasKey("ADPage"))
-                    {
-                        PlayerPrefs.SetInt("ADPage", 1);
-                    }
-                    else
-                    {
-                        PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
-                    }
-                    StartCoroutine(ADPage());
-                    numberOfLoadScene = index + 1;
-                    PanelChooseLVL.SetActive(false);
-                    audioSourceMusic.Stop();
-                    this.interstitial.Show();
+                    PlayerPrefs.SetInt("ADPage", 1);
                 }
                 else
-                    SceneManager.LoadScene(index + 1);
-            
-            //if (!PlayerPrefs.HasKey("NumberReklama"))
-            //{
-            //    PlayerPrefs.SetInt("NumberReklama", 1);
-            //    SceneManager.LoadScene(index+1);
-            //}
-            //else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") == colReklam)
-            //{
-            //    PlayerPrefs.SetInt("NumberReklama", 0);
-            //    if (this.interstitial.IsLoaded())
-            //    {
-            //        if (!PlayerPrefs.HasKey("ADPage"))
-            //        {
-            //            PlayerPrefs.SetInt("ADPage", 1);
-            //        }
-            //        else
-            //        {
-            //            PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
-            //        }
-            //        StartCoroutine(ADPage());
-            //        numberOfLoadScene = index+1;
-            //        PanelChooseLVL.SetActive(false);
-            //        audioSourceMusic.Stop();
-            //        this.interstitial.Show();
-            //    }
-            //    else
-            //        SceneManager.LoadScene(index+1);
-            //}
-
-            //else if (PlayerPrefs.HasKey("NumberReklama") && PlayerPrefs.GetInt("NumberReklama") < colReklam)
-            //{
-            //    PlayerPrefs.SetInt("NumberReklama", PlayerPrefs.GetInt("NumberReklama") + 1);
-            //    SceneManager.LoadScene(index+1);
-            //}
+                {
+                    PlayerPrefs.SetInt("ADPage", PlayerPrefs.GetInt("ADPage") + 1);
+                }
+                StartCoroutine(ADPage());
+                numberOfLoadScene = index + 1;
+                PanelChooseLVL.SetActive(false);
+                audioSourceMusic.Stop();
+                this.interstitial.Show();
+            }
+            else
+                SceneManager.LoadScene(index + 1);
         }
         else
-            SceneManager.LoadScene(index+1);
+            SceneManager.LoadScene(index + 1);
     }
 
     public void RequestInterstitial()
@@ -402,7 +369,7 @@ public class Menu : MonoBehaviour
         OsnovneMenu.SetActive(true);
         PanelChooseLVL.SetActive(false);
         panelLvl[0].SetActive(true);
-        for(int j=1; j<panelLvl.Length; j++)
+        for (int j = 1; j < panelLvl.Length; j++)
         {
             panelLvl[j].SetActive(false);
         }
@@ -413,14 +380,14 @@ public class Menu : MonoBehaviour
     public void MenuRightArrowLVLChoose()
     {
         i++;
-        if(i <= panelLvl.Length-1)
+        if (i <= panelLvl.Length - 1)
         {
-            panelLvl[i-1].SetActive(false);
+            panelLvl[i - 1].SetActive(false);
             panelLvl[i].SetActive(true);
         }
         else
         {
-            i = panelLvl.Length-1;
+            i = panelLvl.Length - 1;
         }
 
     }
@@ -538,7 +505,7 @@ public class Menu : MonoBehaviour
     public void HandleRewardedAdLoaded(object sender, EventArgs args)
     {
         rewardWatch.interactable = true;
-}
+    }
 
     public void HandleRewardedAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
@@ -560,7 +527,7 @@ public class Menu : MonoBehaviour
 
     public void HandleUserEarnedReward(object sender, Reward args)
     {
-        rewardWatch.interactable = false;
+        //rewardWatch.interactable = false;
         if (!PlayerPrefs.HasKey("ShopADBonus"))
         {
             PlayerPrefs.SetInt("ShopADBonus", 1);
@@ -774,4 +741,29 @@ public class Menu : MonoBehaviour
             }
         }
     }
+
+
+
+
+    //============================IAP==============================
+
+    public void OnPurseceComplete(Product product)
+    {
+        switch (product.definition.id)
+        {
+            case "noads":
+                BayAdsOff();
+                break;
+            case "by100coins":
+                GetCoinsForAds(100);
+                break;
+            case "by500coins":
+                GetCoinsForAds(500);
+                break;
+            case "by1000coins":
+                GetCoinsForAds(1000);
+                break;
+        }
+    }
+
 }
