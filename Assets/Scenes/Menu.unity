@@ -5861,7 +5861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   consumePurchase: 1
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   onPurchaseComplete:
     m_PersistentCalls:
       m_Calls:
@@ -10555,7 +10555,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Developed by ArtixDEV
+  m_Text: Developed by ArtixDEV v4
 --- !u!222 &809275811
 CanvasRenderer:
   m_ObjectHideFlags: 0

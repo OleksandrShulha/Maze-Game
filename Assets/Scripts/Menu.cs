@@ -538,7 +538,7 @@ public class Menu : MonoBehaviour //для получения сообщений
         }
         StartCoroutine(ShopADBonus());
         //Указать коректний бонус!!!
-        GetCoinsForAds(1000);
+        GetCoinsForAds(3);
 
     }
 
