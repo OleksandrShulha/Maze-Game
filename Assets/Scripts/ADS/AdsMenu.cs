@@ -6,7 +6,7 @@ using GoogleMobileAds.Api;
 public class AdsMenu : MonoBehaviour
 {
     private BannerView bannerViewBig;
-    private string bannerIDAdMob = "ca-app-pub-3940256099942544/6300978111";
+    private string bannerIDAdMob = "ca-app-pub-3993614711620555/7935676284";
 
 
     void Start()

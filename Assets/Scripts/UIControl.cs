@@ -20,12 +20,12 @@ public class UIControl : MonoBehaviour
 
     int colReklam = 2;
     private InterstitialAd interstitial;
-    private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
+    private string pageIDAdMob = "ca-app-pub-3993614711620555/1789032343";
     private bool isReloadBtn = false, isExitBtn=false, isNextLvlBtn=false; 
     public AudioSource audioSourceMusic;
 
     private RewardedAd rewardedAd;
-    private string rewardedIDAdMob = "ca-app-pub-3940256099942544/5224354917";
+    private string rewardedIDAdMob = "ca-app-pub-3993614711620555/2718970639";
     public GameObject PanelBonusReward;
 
 

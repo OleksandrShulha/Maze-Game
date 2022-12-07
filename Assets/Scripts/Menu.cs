@@ -26,11 +26,11 @@ public class Menu : MonoBehaviour //для получения сообщений
     public AudioSource audioSourceMusic;
 
     private InterstitialAd interstitial;
-    private string pageIDAdMob = "ca-app-pub-3940256099942544/1033173712";
+    private string pageIDAdMob = "ca-app-pub-3993614711620555/1789032343";
     private int numberOfLoadScene;
 
     private RewardedAd rewardedAd;
-    private string rewardedIDAdMob = "ca-app-pub-3940256099942544/5224354917";
+    private string rewardedIDAdMob = "ca-app-pub-3993614711620555/2718970639";
     public Button rewardWatch;
 
 
@@ -62,6 +62,7 @@ public class Menu : MonoBehaviour //для получения сообщений
         {
             bayAdsOf.interactable = false;
             bayAdsOf2.SetActive(false);
+            bayAdsOf3.SetActive(false);
         }
     }
 
